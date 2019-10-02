@@ -1,140 +1,99 @@
 import React from 'react';
-//import Card from'./Card'
-
-/*
-let V=[{name: 'sid',checked :true},
-{name: 'dis',checked :false},
-{name: 's',checked :false},
-{name: 'sd',checked :true},
-{name: 'si',checked :false}]
+import SignUp from'./SignUp'
 
 class App extends React.Component{
   constructor(){
     super()
     this.state={
-      ob: V
-    }
-    this.update=this.update.bind(this)
-  }
-
-  update(namee){
-
-    let Z=V.map(x=>{
-       if(x.name===namee){
-        x.checked=!x.checked
-       }
-       return x;
-      })
-
-    this.setState(()=>{
-      return{ob: Z
-    }  
-     })
-    }
-
-  
-
-  
-  render(){
-    let X=this.state.ob.map(x=>{
-      return(
-        <Card ob={x} f={this.update}/>
-      )
-    })
-    return(
-    <div>
-    {X}
-    </div>
-      )
-    }
-  }
-/
-
-/*
-class App extends React.Component{
-  constructor(){
-    super()
-    this.state={
-      islogged: false
-    }
-  }
-
-  render(){
-
-
-    return(
-      <div>
-      {this.state.islogged?<div><h1>Logged In!</h1></div>:<div><h1>Please Log In</h1></div>}
-      <button onClick={()=>{
-        this.setState(prev=>{
-          return{
-            islogged: !prev.islogged 
-          }
-         
-        })
-      }}{this.state.islogged?'LOGOUT':'LOGIN'}</button>
-      </div>
-      )
-  }
-}
-*/
-/*
-class App extends React.Component{
-  constructor(){
-    super()
-    this.state={
-      data: '',
-      isloaded: false
-    }
-  }
-
-  componentDidMount(){
-    fetch('https://swapi.co/api/people/1')
-    .then((x)=>x.json())
-    .then((y)=>{
-      this.setState(prev=>{
-        return{
-          data: y,
-          isloaded: true
-        }
-      })
-    })
-  }
-
-  render(){
-    let display=this.state.isloaded?this.state.data.name:'LOADING!'
-    return(
-      <p>{display}</p>
-      )
-  }
-}*/
-
-class App extends React.Component{
-  constructor(){
-    super()
-    this.state={
-      firstname: '',
-      lastname: ''
+      email: '',
+      pass: '',
+      signedIn: [],
+      isLoggedin: false,
+      isSignUp: false
     }
     this.handleChange=this.handleChange.bind(this)
+     this.handleChange1=this.handleChange1.bind(this)
+     this.handleChange2=this.handleChange2.bind(this)
+     this.handleChange3=this.handleChange3.bind(this)
+     this.handleChange4=this.handleChange4.bind(this)
   }
 
-  handleChange(event){
-     const {name,value}=event.target;// Good practice, rather than doing event.target.name: event.target.value
+  handleChange(x,y,z,c){
+    let temp=this.state.isLoggedin
+    temp.push({email: z,pass: c})
+    this.setState({[signedIn]: temp})
+    this.setState({[isSignUp]: false})
+  }
+
+//SignUp
+  handleChange1(){
+    this.setState({isSignUp: true})
+  }
+
+
+  
+
+  //logout
+  handleChange2(event)=>{
+    this.setState({[isLoggedin]: false})
+  }
+  //login
+   handleChange3(event){
+    
+    for(x of this.state.signedIn){
+      if(x.email===this.state.email&&x.pass===this.state.pass){
+        //succesfully authenticated!
+        this.setState({[isLoggedin]: true})
+      }
+    }
+
+    alert("Invalid credentials or not signed in!")
+    
+  }
+
+//update login window
+  handleChange4(event){
+    const {name,value}=event.target;// Good practice, rather than doing event.target.name: event.target.value
     console.log(name + ' '+ value+' ' + event.target.value)
     this.setState({[name]: value})
+
   }
 
   render(){
-   return(
-    <div>
-    <form>
-      <input type='text' name='firstname' placeholder='FirstName' onChange={this.handleChange}></input>
-      <input type='text' name='lastname' placeholder='LastName' onChange={this.handleChange}></input>
-    </form>
-    <h1>{this.state.firstname}  {this.state.lastname}</h1>
-    </div>
-    )
+    if(this.state.isLoggedin){
+      return(
+        <div>
+        <button onClick={this.handleChange2}>LOGOUT!</button>
+        </div>
+        )
+    }else{
+      //either signup or login
+      if(this.state.isSignUp){
+         return(
+        <div>
+       <SignUp ob={this.state.signedIn}/>
+        </div>
+        )
+      }else{
+        //login
+        return(
+          <div>
+          <form onSubmit={handleChange3}>
+          <input type='email' placeholder='email' name='email' onChange={this.handleChange4}></input>
+           <input type='password' placeholder='password' name='pass' onChange={this.handleChange4}></input>
+           <input type='submit'></input>
+          </form>
+          <div>
+          <button onCLick={handleChange1}>SIGNUP</button>
+          </div>
+          </div>
+          )
+      }
+
+
+
+
+    }
   }
 }
 export default App;
