@@ -9,7 +9,7 @@ class App extends React.Component{
       pass: '',
       signedIn: [],
       isLoggedin: false,
-      isSignUp: false
+      isSignUp: true
     }
     this.handleChange=this.handleChange.bind(this)
      this.handleChange1=this.handleChange1.bind(this)
@@ -18,15 +18,31 @@ class App extends React.Component{
      this.handleChange4=this.handleChange4.bind(this)
   }
 
-  handleChange(x,y,z,c){
-    let temp=this.state.isLoggedin
+
+//HERE THE PROBLEM STARTS
+  handleChange(z,c){
+    /* event.preventDefault()
+      const {name,value}=event.target;
+    console.log(name + ' '+ value+' ' )*/
+     /* return event => {
+      event.preventDefault()
+      let temp=this.state.signedIn
+    console.log(typeof(temp))
     temp.push({email: z,pass: c})
-    this.setState({[signedIn]: temp})
-    this.setState({[isSignUp]: false})
+    //this.setState({signedIn: temp})
+   this.setState({isSignUp: false})
+    }*/
+     let temp=this.state.signedIn
+    console.log(typeof(temp))
+    temp.push({email: z,pass: c})
+    this.setState({signedIn: temp})
+   this.setState({isSignUp: false})
+       
   }
 
 //SignUp
   handleChange1(){
+    console.log("jflsfjsjf")
     this.setState({isSignUp: true})
   }
 
@@ -34,16 +50,16 @@ class App extends React.Component{
   
 
   //logout
-  handleChange2(event)=>{
-    this.setState({[isLoggedin]: false})
+  handleChange2(event){
+    this.setState({isLoggedin: false})
   }
   //login
    handleChange3(event){
-    
+    let x
     for(x of this.state.signedIn){
       if(x.email===this.state.email&&x.pass===this.state.pass){
         //succesfully authenticated!
-        this.setState({[isLoggedin]: true})
+        this.setState({isLoggedin: true})
       }
     }
 
@@ -71,20 +87,21 @@ class App extends React.Component{
       if(this.state.isSignUp){
          return(
         <div>
-       <SignUp ob={this.state.signedIn}/>
+       <SignUp ob={this.handleChange}/>
         </div>
         )
       }else{
         //login
+        console.log(this.state.signedIn)
         return(
           <div>
-          <form onSubmit={handleChange3}>
+          <form onSubmit={this.handleChange3}>
           <input type='email' placeholder='email' name='email' onChange={this.handleChange4}></input>
            <input type='password' placeholder='password' name='pass' onChange={this.handleChange4}></input>
            <input type='submit'></input>
           </form>
           <div>
-          <button onCLick={handleChange1}>SIGNUP</button>
+          <button onCLick={this.handleChange1}>SIGNUP!</button>
           </div>
           </div>
           )
