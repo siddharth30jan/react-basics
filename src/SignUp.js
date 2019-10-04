@@ -10,7 +10,6 @@ class SignUp extends React.Component{
 			email: '',
 			pass: ''
 		}
-		 this.handleChange=this.handleChange.bind(this)
 	}
 
 	handleChange(event){
@@ -21,15 +20,14 @@ class SignUp extends React.Component{
   
 
 	render(){
-		//console.log({"some": this.props})
 		return(
 	<div>
 			    //It should only run on submitting but its not working like that!!
-			<form onSubmit={this.props.ob(this.state.email,this.state.pass)}>
-			<input type='text' placeholder='firstName' name='firstName' onChange={this.handleChange}></input>
-           <input type='text' placeholder='lastName' name='lastName' onChange={this.handleChange}></input>
-          <input type='email' placeholder='email' name='email' onChange={this.handleChange}></input>
-           <input type='password' placeholder='password' name='pass' onChange={this.handleChange}></input>
+			<form onSubmit={()=>this.props.ob(this.state.email,this.state.pass)}>
+			<input type='text' placeholder='firstName' name='firstName' onChange={(e)=>this.handleChange(e)}></input>
+           <input type='text' placeholder='lastName' name='lastName' onChange={(e)=>this.handleChange(e)}></input>
+          <input type='email' placeholder='email' name='email' onChange={(e)=>this.handleChange(e)}></input>
+           <input type='password' placeholder='password' name='pass' onChange={(e)=>this.handleChange(e)}></input>
            <input type='submit'></input>
           </form>
     </div>
