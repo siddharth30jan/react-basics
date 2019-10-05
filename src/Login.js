@@ -1,7 +1,10 @@
 import React from 'react';
+import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import 'antd/dist/antd.css'
+import 'tachyons'
 import ReactDom from 'react-dom'
 
-class Login extends React.Component{
+class NormalLoginForm extends React.Component{
   constructor(){
     super()
     this.state={
@@ -21,21 +24,55 @@ class Login extends React.Component{
     this.props.history.push('/signup')
   }
 
-  render(){
-    return(
-      <div>
-        <form onSubmit={()=>this.handleChange1()}>
-          <input type='email' placeholder='email' name='email' onChange={(e)=>this.handleChange(e)}></input>
-           <input type='password' placeholder='password' name='pass' onChange={(e)=>this.handleChange(e)}></input>
-           <input type='submit'></input>
-          </form>
-          <div>
-          <button type="submit" value="SignUp" onClick={()=>this.handleChange1()}>Sign up</button>
-          </div>
-      </div>
-      )
-
-    
+  render(){     
+        const { getFieldDecorator } = this.props.form;
+    return (
+      <article class="mw5 center bg-white br3 pa3 pa4-ns mv3 ba b--black-10">
+      <Form  className="login-form">
+        <Form.Item>
+          {getFieldDecorator('username', {
+            rules: [{ required: true, message: 'Please input your username!' }],
+          })(
+            <Input
+              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="Username"
+              name="email"
+              onChange={(e)=>this.handleChange(e)}
+            />,
+          )}
+        </Form.Item>
+        <Form.Item>
+          {getFieldDecorator('password', {
+            rules: [{ required: true, message: 'Please input your Password!' }],
+          })(
+            <Input
+              prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              type="password"
+              placeholder="Password"
+              name="pass"
+              onChange={(e)=>this.handleChange(e)}
+            />,
+          )}
+        </Form.Item>
+        <Form.Item>
+          {getFieldDecorator('remember', {
+            valuePropName: 'checked',
+            initialValue: true,
+          })(<Checkbox>Remember me</Checkbox>)}
+          
+          <Button type="primary" htmlType="submit" className="login-form-button">
+            Log in
+          </Button>
+         
+           <a href="/signup">Sign Up!</a>
+        </Form.Item>
+      </Form>
+      </article>
+    )
   }
 }
+const Login = Form.create({ name: 'normal_login' })(NormalLoginForm);
+
+
+      
 export default Login;
