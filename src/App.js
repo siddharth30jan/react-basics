@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import Login from './Login'
 import SignUp from'./SignUp'
+import Home from './Home'
 import {createBrowserHistory} from "history"
 
 
@@ -20,6 +21,9 @@ class App extends React.Component{
     //console.log(this.state)
     return(
       <BrowserRouter >
+      <Route path="/home" component={Home}>
+            
+            </Route>
       <Route path="/login" component={Login}>
             
       </Route>
